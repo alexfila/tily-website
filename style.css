@@ -74,8 +74,8 @@ body {
 
 .icon-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3px;
     width: 60px;
     height: 60px;
 }
