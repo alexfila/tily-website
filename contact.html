@@ -186,7 +186,12 @@
                 <p>Have a question? We'd love to hear from you.</p>
             </div>
 
-            <form class="contact-form" id="contactForm">
+            <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                <!-- Web3Forms Configuration -->
+                <input type="hidden" name="access_key" value="c115b19c-3516-4e6a-8b42-b89c508ebbe3">
+                <input type="hidden" name="subject" value="New Contact Form Submission from Tily">
+                <input type="hidden" name="from_name" value="Tily Contact Form">
+                
                 <div class="form-group">
                     <label for="name">Name *</label>
                     <input type="text" id="name" name="name" required placeholder="Your name">
@@ -199,13 +204,16 @@
 
                 <div class="form-group">
                     <label for="subject">Subject *</label>
-                    <input type="text" id="subject" name="subject" required placeholder="What is this about?">
+                    <input type="text" id="subject" name="custom_subject" required placeholder="What is this about?">
                 </div>
 
                 <div class="form-group">
                     <label for="message">Message *</label>
                     <textarea id="message" name="message" required placeholder="Tell us how we can help..."></textarea>
                 </div>
+
+                <!-- Spam protection -->
+                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
                 <button type="submit" class="submit-btn" id="submitBtn">Send Message</button>
 
@@ -214,7 +222,7 @@
                 </div>
 
                 <div class="error-message" id="errorMessage">
-                    Sorry, there was an error sending your message. Please try again or email us directly at fialex66@gmail.com
+                    Sorry, there was an error sending your message. Please try again or email us directly at info@tily.app
                 </div>
             </form>
         </div>
@@ -227,6 +235,7 @@
             const submitBtn = document.getElementById('submitBtn');
             const successMessage = document.getElementById('successMessage');
             const errorMessage = document.getElementById('errorMessage');
+            const form = e.target;
             
             // Hide previous messages
             successMessage.style.display = 'none';
@@ -236,31 +245,28 @@
             submitBtn.disabled = true;
             submitBtn.textContent = 'Sending...';
             
-            // Get form data
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                subject: document.getElementById('subject').value,
-                message: document.getElementById('message').value
-            };
-            
-            // Create mailto link as fallback
-            const mailtoLink = `mailto:fialex66@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
-                `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-            )}`;
-            
-            // Open default email client
-            window.location.href = mailtoLink;
-            
-            // Show success message
-            setTimeout(() => {
-                successMessage.style.display = 'block';
+            try {
+                const formData = new FormData(form);
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    successMessage.style.display = 'block';
+                    form.reset();
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                errorMessage.style.display = 'block';
+            } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Send Message';
-                
-                // Clear form
-                document.getElementById('contactForm').reset();
-            }, 500);
+            }
         });
     </script>
 </body>
