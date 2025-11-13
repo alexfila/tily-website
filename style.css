@@ -589,8 +589,8 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1px;
-    width: 25px;
-    height: 25px;
+    width: 22px;
+    height: 22px;
 }
 
 .footer-tile {
