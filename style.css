@@ -81,7 +81,7 @@ body {
 }
 
 .tile {
-    border-radius: 3px;
+    border-radius: 5px;
     animation: tileShift 8s ease-in-out infinite;
 }
 
