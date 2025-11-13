@@ -76,8 +76,8 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 3px;
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
 }
 
 .tile {
