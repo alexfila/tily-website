@@ -81,7 +81,7 @@ body {
 }
 
 .tile {
-    border-radius: 5px;
+    border-radius: 3px;
     animation: tileShift 8s ease-in-out infinite;
 }
 
@@ -280,7 +280,7 @@ body {
 }
 
 .mini-tile {
-    border-radius: 2px;
+    border-radius: 4px;
 }
 
 .mini-tile-1 { background: white; }
